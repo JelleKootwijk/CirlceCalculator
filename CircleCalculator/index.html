@@ -17,23 +17,40 @@
             <br>
             <br>
             <form action="sketch.js">
+                <label for="">Diameter:</label>
                 <input type="text" id="input">
                 <input type="button" value="calculate" id="button">
+                <br>
+                <label for="">Omtrek:</label>
+                <input type="text" id="inputOmtrek">
+                <input type="button" value="calculate" id="calculateOmtrek">
+                <br>
+                <label for="">Oppervlakte:</label>
+                <input type="text" id="inputOppervlakte">
+                <input type="button" value="calculate" id="calculateOppervlakte">
+                <br>
                 <input type="button" value="reset" id="reset">
             </form>
             <br>
-            <span>Diameter:</span>
-            <p id='radius'>0</p>
-            <span>Straal:</span>
-            <p id='straal'>0</p>
+            <div class="row">
+                <div class="col-sm">
+                    <span>Diameter:</span>
+                    <p id='radius'>0</p>
+                    <span>Straal:</span>
+                    <p id='straal'>0</p>
+                </div>
+                <div class="col-sm">
+                    <span>Oppervlakte:</span>
+                    <p id='oppervlakte'>0</p> 
+                    <span>Omtrek:</span>
+                    <p id='omtrek'>0</p>   
+                </div>
+            </div>
             
-            <br>
-            <br>
-            <span>Oppervlakte:</span>
-            <p id='oppervlakte'>0</p> 
-            <span>Omtrek:</span>
-            <p id='omtrek'>0</p>   
+            
     </div>
+     
+  
     <script src="sketch.js"></script>
 </body>
 </html>
