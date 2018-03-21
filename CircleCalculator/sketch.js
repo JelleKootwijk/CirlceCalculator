@@ -1,27 +1,37 @@
-const button = document.getElementById('button');
-const reset = document.getElementById('reset');
-const input = document.getElementById('input');
-
+const diameterButton = document.getElementById('calculateDiameter');
 const omtrekButton = document.getElementById('calculateOmtrek');
-const calculateOmtrek = document.getElementById('inputOmtrek');
+const oppervlakteButton = document.getElementById('calculateOppervlakte');
+const resetCanvasButton = document.getElementById('resetCanvas');
 
-const oppervlakteInput = document.getElementById('inputOppervlakte');
-const calculateOppervlakte = document.getElementById('calculateOppervlakte');
+const inputDiameter = document.getElementById('inputDiameter');
+const inputOmtrek = document.getElementById('inputOmtrek');
+const inputOppervlakte = document.getElementById('inputOppervlakte');
 
-const canvas = document.getElementById('canvas');
-var ctx = canvas.getContext("2d");
 
-var y = canvas.height / 2;
-var x = canvas.width / 2;
 
-button.addEventListener('click', updateBtn);
-reset.addEventListener('click', resetCanvas);
-omtrekButton.addEventListener('click', calculateOmtrekBoi);
-calculateOppervlakte.addEventListener('click', calculateOppervlakteDibng);
- 
+const diameterText = document.getElementById('radius').innerHTML;
+const straalText = document.getElementById('straal').innerHTML; 
+const oppervlakteText = document.getElementById('oppervlakte').innerHTML;
+const omtrekText = document.getElementById('omtrek').innerHTML;
+
+
+const getCanvas = document.getElementById('canvas');
+const canvas = getCanvas.getContext('2d');
+
+const y = getCanvas.height / 2;
+const x = getCanvas.width / 2;
+
+diameterButton.addEventListener('click', calculateDiameter);
+omtrekButton.addEventListener('click', calculateOmtrek);
+oppervlakteButton.addEventListener('click', calculateOppervlakte);
+resetCanvasButton.addEventListener('click', resetCanvas);
+
+var calculate = new Calculate();
+
+
 function resetCanvas(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+    canvas.clearRect(0, 0, getCanvas.width, getCanvas.height);
+
     document.getElementById('straal').innerHTML = 0;
     document.getElementById('radius').innerHTML = 0;
 
@@ -29,52 +39,51 @@ function resetCanvas(){
     document.getElementById('omtrek').innerHTML = 0;
 }
 
-function calculateOppervlakteDibng(){
-    let straal = Math.sqrt(oppervlakteInput.value / Math.PI);
-    let diameter = straal * 2;
-    let omtrek = diameter * Math.PI;
-    let oppervlakte = straal * straal * Math.PI;
+function calculateOppervlakte(){
+    let diameter = calculate.calculateOppervlakteBack(inputOppervlakte.value);
+    let straal = calculate.calculateStraal(diameter);
+    let oppervlakte = calculate.calculateOppervlakte(diameter);
+    let omtrek = calculate.calculateOmtrek(diameter);
 
-    ctx.beginPath();
-    ctx.arc(x, y, diameter, 0, 2 * Math.PI);
+    calculate.draw(diameter);
 
     document.getElementById('radius').innerHTML = diameter.toFixed(2);
-    document.getElementById('straal').innerHTML = straal.toFixed(2);
+    document.getElementById('straal').innerHTML = straal.toFixed(2); 
 
     document.getElementById('oppervlakte').innerHTML = oppervlakte.toFixed(2);
     document.getElementById('omtrek').innerHTML = omtrek.toFixed(2);
-    ctx.stroke();
+  
+    canvas.stroke();
 }
 
-function calculateOmtrekBoi(){
-    let diameter = calculateOmtrek.value / Math.PI;
-    let straal = diameter / 2;
-    let omtrek = calculateOmtrek.value;
-    let oppervlakte = straal * straal * Math.PI;
+function calculateOmtrek(){
+    let diameter = calculate.calculateOmtrekBack(inputOmtrek.value);
+    let straal = calculate.calculateStraal(diameter);
+    let oppervlakte = calculate.calculateOppervlakte(diameter);
 
-    ctx.beginPath();
-    ctx.arc(x, y, diameter, 0, 2 * Math.PI);
+    calculate.draw(diameter);
 
     document.getElementById('radius').innerHTML = diameter.toFixed(2);
-    document.getElementById('straal').innerHTML = straal.toFixed(2);
+    document.getElementById('straal').innerHTML = straal.toFixed(2); 
 
     document.getElementById('oppervlakte').innerHTML = oppervlakte.toFixed(2);
-    document.getElementById('omtrek').innerHTML = omtrek;
-    ctx.stroke();
+    document.getElementById('omtrek').innerHTML = inputOmtrek.value;
+
+    canvas.stroke();
 }
 
-function updateBtn(){
-    ctx.beginPath();
-    ctx.arc(x, y, input.value, 0, 2 * Math.PI);
-    document.getElementById('radius').innerHTML = input.value;
-    document.getElementById('straal').innerHTML = input.value/2;
+function calculateDiameter(){
+    let straal = calculate.calculateStraal(inputDiameter.value);
+    let oppervlakte = calculate.calculateOppervlakte(inputDiameter.value);
+    let omtrek = calculate.calculateOmtrek(inputDiameter.value);
 
-    let omtrek = input.value * Math.PI;
-    let straal = input.value / 2;
-    let oppervlakte = straal * straal * Math.PI;
+    calculate.draw(inputDiameter.value);
+
+    document.getElementById('radius').innerHTML = inputDiameter.value;
+    document.getElementById('straal').innerHTML = straal.toFixed(2); 
 
     document.getElementById('oppervlakte').innerHTML = oppervlakte.toFixed(2);
     document.getElementById('omtrek').innerHTML = omtrek.toFixed(2);
 
-    ctx.stroke();
+    canvas.stroke();
 }
